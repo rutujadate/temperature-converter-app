@@ -13,6 +13,7 @@ export default function Dashboard() {
     function handleInputUnitChange(event){
         setInputUnit(event.target.value);
         if(event.target.value==="C"){
+            
             setConvertToUnit("Fahrenheit")
         }
         else{
@@ -21,16 +22,16 @@ export default function Dashboard() {
     }
     function handleConvertToUnitChange(event){
         setConvertToUnit(event.target.value);
+        
     }
     function handleToConvert(){
         console.log(degree,inputunit,converttounit);
         if(converttounit==="Fahrenheit"){
-
             setOutput((degree*9/5)+32);
             setOutputUnit("F")
           }
           else if(converttounit==="Celsius"){
-            setOutput((degree*5/9)+32);
+            setOutput((degree-32)*5/9);
             setOutputUnit("C")
           }
         
