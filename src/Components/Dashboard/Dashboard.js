@@ -2,67 +2,75 @@ import { useState } from "react";
 import "./Dashboard.css"
 export default function Dashboard() {
     const[degree,setDegree]=useState(0);
-    const[convertintounit,setConvertInToUnit]=useState();
-    const[inputunit,setInputUnit]=useState();
-    const[outputunit,setOutputUnit]=useState();
+    const[inputunit,setInputUnit]=useState("C");
+    const[converttounit,setConvertToUnit]=useState("Fahrenheit");
+    const[output,setOutput]=useState(32);
+    const[outputunit,setOutputUnit]=useState("F");
+
     function handleDegreeChange(event){
         setDegree(event.target.value);
     }
-    function handleConvertInToUnitChange(event){
-        setConvertInToUnit(event.target.value);
-    }
     function handleInputUnitChange(event){
         setInputUnit(event.target.value);
+        if(event.target.value==="C"){
+            setConvertToUnit("Fahrenheit")
+        }
+        else{
+            setConvertToUnit("Celsius")
+        }
     }
-    function handleOutputUnitChange(event){
-        setOutputUnit(event.target.value);
+    function handleConvertToUnitChange(event){
+        setConvertToUnit(event.target.value);
+    }
+    function handleToConvert(){
+        console.log(degree,inputunit,converttounit);
+        if(converttounit==="Fahrenheit"){
+
+            setOutput((degree*9/5)+32);
+            setOutputUnit("F")
+          }
+          else if(converttounit==="Celsius"){
+            setOutput((degree*5/9)+32);
+            setOutputUnit("C")
+          }
+        
     }
 
-    function handleToConvertClick(){
-        console.log(degree,convertintounit, inputunit,outputunit);
-        if(convertintounit===Fahrenheit){
-            setOutputUnit(Fahrenheit=(degree*9/5)+32);
-        }
-        else if(convertintounit===Celsius){
 
-            setOutputUnit(Celsius=(degree*5/9)+32);
-        }
-    
-    }
-    
     return (
         <div className="background">
             <div className="conversionBox">
                 {/* ......Right side Section..... */}
                 <div className="innerSection">
                     <div className="inputSection">
-                    <div className="inputSectionHeader">Enter Temperature</div>
-                    <div>
-                        <div className="label"><label>Degree</label></div>
+                        <div className="inputSectionHeader">Enter Temperature</div>
                         <div>
-                            <input  type="text" value={degree} onChange={handleDegreeChange}/><select  type="text" value={inputunit} onChange={handleInputUnitChange} className="selectOptions">
-                                <option>°C</option>
-                                <option>°F</option>
-                            </select>
+                            <div className="label"><label>Degree</label></div>
+                            <div>
+                                <input type="text" value={degree} onChange={handleDegreeChange}/>
+                                <select  value={inputunit} onChange={handleInputUnitChange}className="selectOptions">
+                                    <option value={"C"}>°C</option>
+                                    <option value={"F"}>°F</option>
+                                </select>
+                            </div>
                         </div>
-                    </div>
-                    <div className="">
-                        <div className="label"><label>Convert In</label></div>
-                        <div>
-                            <select  type="text" value={convertintounit} onChange={handleConvertInToUnitChange}className="innerSelectOption">
-                                <option>Fahrenheit(°f)</option>
-                                <option>Celsius(°C)</option>
-                            </select>
+                        <div className="">
+                            <div className="label"><label>Convert In</label></div>
+                            <div>
+                                <select  value={converttounit} onChange={handleConvertToUnitChange} className="innerSelectOption">
+                                    <option value={"Fahrenheit"}>Fahrenheit(°f)</option>
+                                    <option value={"Celsius"}>Celsius(°C)</option>
+                                </select>
+                            </div>
                         </div>
-                    </div>
-                    <div className="InnerButton">
-                        <button onClick={handleToConvertClick}>Convert</button>
-                    </div>
+                        <div className="InnerButton">
+                            <button onClick={handleToConvert}>Convert</button>
+                        </div>
                     </div>
                 </div>
                 {/*.... Left side Section.... */}
                 <div className="outerSection">
-                    <div type="number" value={outputunit} onChange={handleOutputUnitChange} className="outerSectionText">32°F</div>
+                    <div className="outerSectionText">{output} <sup>°{outputunit}</sup></div>
                 </div>
             </div>
 
